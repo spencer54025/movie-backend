@@ -14,7 +14,7 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
 
-class Movie():
+class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     title = db.Column(db.String, nullable=False, unique=True)
     rating = db.Column(db.String, nullable=False)
@@ -97,7 +97,7 @@ def delete_movie(id):
     return jsonify('that movie was deleted')
 
 
-@app.route('/movie/update/<id>')
+@app.route('/movie/update/<id>', methods=["PUT"])
 def update_movie(id):
     if request.content_type != 'application/json':
         return jsonify('data must be json')
